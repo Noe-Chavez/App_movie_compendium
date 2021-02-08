@@ -47,6 +47,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.google.code.gson:gson:$gson_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // Safe Args only Kotlin
     apply plugin: "androidx.navigation.safeargs.kotlin"
