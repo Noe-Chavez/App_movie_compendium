@@ -6,7 +6,7 @@
     app:startDestination="@id/movieFragment">
     <fragment
         android:id="@+id/movieFragment"
-        android:name="mx.com.disoftware.movieconpendium.MovieFragment"
+        android:name="mx.com.disoftware.movieconpendium.ui.movie.MovieFragment"
         android:label="fragment_movie"
         tools:layout="@layout/fragment_movie" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/movieDetailFragment"
-        android:name="mx.com.disoftware.movieconpendium.MovieDetailFragment"
+        android:name="mx.com.disoftware.movieconpendium.ui.moviedetails.MovieDetailFragment"
         android:label="fragment_movie_detail"
         tools:layout="@layout/fragment_movie_detail" />
 </navigation>
