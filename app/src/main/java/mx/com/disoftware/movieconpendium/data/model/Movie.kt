@@ -1,5 +1,7 @@
 package mx.com.disoftware.movieconpendium.data.model
-
+/*
+    Se utiliza para guardar la info en RAM.
+* */
 data class Movie(
         val id: Int = -1,
         val adult: Boolean = false,

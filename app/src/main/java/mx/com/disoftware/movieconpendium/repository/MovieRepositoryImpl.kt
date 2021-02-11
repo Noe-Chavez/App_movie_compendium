@@ -1,4 +1,14 @@
 package mx.com.disoftware.movieconpendium.repository
 
-class MovieRepositoryImpl : MovieRepository {
+import mx.com.disoftware.movieconpendium.data.model.MovieList
+import mx.com.disoftware.movieconpendium.data.remote.MovieDataSource
+
+class MovieRepositoryImpl(private val dataSource: MovieDataSource) : MovieRepository {
+
+    override suspend fun getUpcomingMovies() = dataSource.getUpcomingMovies()
+
+    override suspend fun getTopRatedMovies() = dataSource.getTopRatedMovies()
+
+    override suspend fun getPopularMovies() = dataSource.getPopularMovies()
+
 }
