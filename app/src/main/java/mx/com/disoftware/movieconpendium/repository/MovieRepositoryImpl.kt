@@ -1,6 +1,5 @@
 package mx.com.disoftware.movieconpendium.repository
 
-import mx.com.disoftware.movieconpendium.data.model.MovieList
 import mx.com.disoftware.movieconpendium.data.remote.MovieDataSource
 
 class MovieRepositoryImpl(private val dataSource: MovieDataSource) : MovieRepository {
