@@ -40,45 +40,17 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding = FragmentMovieBinding.bind(view)
-        /* acceder a los recuros definidos en la vista R.layout.fragment_movie.
-           NOTA, los nomnbres de los recursos los realiza con notación camel case, no como originalmnete se colocaron en el xml.
-           del fragmento (R.layout.fragment_movie).
-         */
-        binding.progressBar.visibility = View.GONE
 
-        /**
-         * Cada vez que se ejecute un emit (MovieViewModel), se notificará al observable.
-         * En otras palabras nos estamos subscriviendo a fetchUpComingMovies, que devuelve un LiveData, con
-         * las posibilidades que fetchUpComingMovies regrese (trayendo la info [Loanding], info obtenida sin
-         * presentar problema [Success] y por ultimo notificar en caso que ocurra algún error [failure]).
-         * viewLifecycleOwner, se encarga de gestionar el boserver, es decir, que no necesitamos subcribir
-         * o desubscribir, ya que esta clase lo hace por nosostros.
-         */
-        viewModel.fetchUpComingMovies().observe(viewLifecycleOwner, Observer { result ->
+        // Se hacen las llamadas de manera secuencial, primero la de coming, luego rated y al último popular.
+        viewModel.fetchMainScreenMovies().observe(viewLifecycleOwner, Observer { result ->
             when(result) {
                 is Resource.Loanding -> {
-                    Log.d("LiveData_ComingMovies", "Loanding...")
+                    Log.d("LiveData", "Loading...")
                 }
                 is Resource.Success -> {
-                    Log.d("LiveData_ComingMovies", "¡information's Successful!")
-                    Log.d("LiveData_ComingMovies", "${result.data}")
-                }
-                is Resource.Failure -> {
-                    Log.d("Error_ComingMovies", "${result.exception}")
-                }
-            }
-        })
-
-        viewModel.fetchUpPopularMovies().observe(viewLifecycleOwner, Observer { result ->
-            when(result) {
-                is Resource.Loanding -> {
-                    Log.d("LiveData_PopularMovies", "Loanding...")
-                }
-                is Resource.Success -> {
-                    Log.d("LiveData_PopularMovies", "¡information's Successful!")
-                    Log.d("LiveData_PopularMovies", "${result.data}")
+                    Log.d("LiveData", "¡Successful!")
+                    Log.d("LiveData", "UpComing: ${result.data.first} \n ToRated: ${result.data.second} \n Popular: ${result.data.third}")
                 }
                 is Resource.Failure -> {
                     Log.d("Error", "${result.exception}")
@@ -86,22 +58,6 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
             }
         })
 
-        viewModel.fetchUpRatedMovies().observe(viewLifecycleOwner, Observer { result ->
-            when(result) {
-                is Resource.Loanding -> {
-                    Log.d("LiveData_RatedMovies", "Loanding...")
-                }
-                is Resource.Success -> {
-                    Log.d("LiveData_RatedMovies", "¡information's Successful!")
-                    Log.d("LiveData_RatedMovies", "${result.data}")
-                }
-                is Resource.Failure -> {
-                    Log.d("Error_RatedMovies", "${result.exception}")
-                }
-            }
-        })
-
-        // Nota: puede acabar cualquier peticion antes que otra.
     }
 
 }

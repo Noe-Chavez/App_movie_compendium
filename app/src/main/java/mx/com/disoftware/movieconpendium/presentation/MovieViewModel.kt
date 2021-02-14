@@ -18,28 +18,13 @@ class MovieViewModel(private val repo: MovieRepository) : ViewModel() {
      * (suspend, en la clase MovieDataSource) hay que asignar un hilo a la corrutina, el utilizado
      * para traer información remota se utiliza IO.
      */
-    fun fetchUpComingMovies() = liveData(Dispatchers.IO) {
+    fun fetchMainScreenMovies() = liveData(Dispatchers.IO) {
         emit(Resource.Loanding())
         try {
-            emit(Resource.Success(repo.getUpcomingMovies()))
-        } catch (e: Exception) {
-            emit(Resource.Failure(e))
-        }
-    }
-
-    fun fetchUpPopularMovies() = liveData(Dispatchers.IO) {
-        emit(Resource.Loanding())
-        try {
-            emit(Resource.Success(repo.getPopularMovies()))
-        } catch (e: Exception) {
-            emit(Resource.Failure(e))
-        }
-    }
-
-    fun fetchUpRatedMovies() = liveData(Dispatchers.IO) {
-        emit(Resource.Loanding())
-        try {
-            emit(Resource.Success(repo.getTopRatedMovies()))
+            // Realiza las tres peticiones al mismo tiempo, se pueden hacer para n llamadas, buscar la clase NTuple...
+            emit(Resource.Success(
+                Triple(repo.getUpcomingMovies(), repo.getTopRatedMovies(), repo.getPopularMovies()))
+            )
         } catch (e: Exception) {
             emit(Resource.Failure(e))
         }
