@@ -6,16 +6,22 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.ConcatAdapter
 import mx.com.disoftware.movieconpendium.R
 import mx.com.disoftware.movieconpendium.core.Resource
+import mx.com.disoftware.movieconpendium.data.model.Movie
 import mx.com.disoftware.movieconpendium.data.remote.MovieDataSource
 import mx.com.disoftware.movieconpendium.databinding.FragmentMovieBinding
 import mx.com.disoftware.movieconpendium.presentation.MovieViewModel
 import mx.com.disoftware.movieconpendium.presentation.MovieViewModelFactory
 import mx.com.disoftware.movieconpendium.repository.MovieRepositoryImpl
 import mx.com.disoftware.movieconpendium.repository.RetrofitClient
+import mx.com.disoftware.movieconpendium.ui.movie.adapters.MovieAdapter
+import mx.com.disoftware.movieconpendium.ui.movie.adapters.concat.PopularConcatAdapter
+import mx.com.disoftware.movieconpendium.ui.movie.adapters.concat.TopRatedConcatAdapter
+import mx.com.disoftware.movieconpendium.ui.movie.adapters.concat.UpcomingConcatAdapter
 
-class MovieFragment : Fragment(R.layout.fragment_movie) {
+class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnMovieClickListener {
 
     /**
      *  Obs. onViewCreated se visualiza que se pasa en el constructor de este fragment el recurso R.layout.fragment_movie.
@@ -38,26 +44,43 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
         )
     }
 
+    private lateinit var concatAdapter: ConcatAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMovieBinding.bind(view)
+
+        concatAdapter = ConcatAdapter()
 
         // Se hacen las llamadas de manera secuencial, primero la de coming, luego rated y al último popular.
         viewModel.fetchMainScreenMovies().observe(viewLifecycleOwner, Observer { result ->
             when(result) {
                 is Resource.Loanding -> {
+                    binding.progressBar.visibility = View.VISIBLE
                     Log.d("LiveData", "Loading...")
                 }
                 is Resource.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    concatAdapter.apply {
+                        addAdapter(0, UpcomingConcatAdapter(MovieAdapter(result.data.first.results, this@MovieFragment)))
+                        addAdapter(1, TopRatedConcatAdapter(MovieAdapter(result.data.second.results, this@MovieFragment)))
+                        addAdapter(2, PopularConcatAdapter(MovieAdapter(result.data.third.results, this@MovieFragment)))
+                    }
+                    binding.rvMovies.adapter = concatAdapter
                     Log.d("LiveData", "¡Successful!")
                     Log.d("LiveData", "UpComing: ${result.data.first} \n ToRated: ${result.data.second} \n Popular: ${result.data.third}")
                 }
                 is Resource.Failure -> {
+                    binding.progressBar.visibility = View.GONE
                     Log.d("Error", "${result.exception}")
                 }
             }
         })
 
+    }
+
+    override fun onMovieClick(movie: Movie) {
+        Log.d("Movie", "onMovieClick: $movie")
     }
 
 }
