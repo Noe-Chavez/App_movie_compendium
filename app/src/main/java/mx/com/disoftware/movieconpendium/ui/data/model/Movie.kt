@@ -1,4 +1,4 @@
-package mx.com.disoftware.movieconpendium.data.model
+package mx.com.disoftware.movieconpendium.ui.data.model
 /*
     Se utiliza para guardar la info en RAM.
 * */

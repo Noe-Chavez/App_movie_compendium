@@ -1,6 +1,6 @@
 package mx.com.disoftware.movieconpendium.repository
 
-import mx.com.disoftware.movieconpendium.data.model.MovieList
+import mx.com.disoftware.movieconpendium.ui.data.model.MovieList
 
 /**
  * Esta interfaz se encarga de trare la infromación de la db local.

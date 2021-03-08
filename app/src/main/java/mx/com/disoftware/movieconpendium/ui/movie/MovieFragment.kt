@@ -1,5 +1,6 @@
 package mx.com.disoftware.movieconpendium.ui.movie
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,8 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import mx.com.disoftware.movieconpendium.R
 import mx.com.disoftware.movieconpendium.core.Resource
-import mx.com.disoftware.movieconpendium.data.model.Movie
-import mx.com.disoftware.movieconpendium.data.remote.MovieDataSource
+import mx.com.disoftware.movieconpendium.ui.data.model.Movie
+import mx.com.disoftware.movieconpendium.ui.data.remote.MovieDataSource
 import mx.com.disoftware.movieconpendium.databinding.FragmentMovieBinding
 import mx.com.disoftware.movieconpendium.presentation.MovieViewModel
 import mx.com.disoftware.movieconpendium.presentation.MovieViewModelFactory
@@ -89,8 +90,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnMovieCli
             movie.overview,
             movie.title,
             movie.original_language,
-            movie.release_date
-        )
+            movie.release_date )
         findNavController().navigate(action)
         Log.d("Movie", "onMovieClick: $movie")
     }

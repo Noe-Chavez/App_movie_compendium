@@ -2,10 +2,9 @@ package mx.com.disoftware.movieconpendium.repository
 
 import com.google.gson.GsonBuilder
 import mx.com.disoftware.movieconpendium.application.AppConstants
-import mx.com.disoftware.movieconpendium.data.model.MovieList
+import mx.com.disoftware.movieconpendium.ui.data.model.MovieList
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import retrofit2.http.GET
 import retrofit2.http.Query
 

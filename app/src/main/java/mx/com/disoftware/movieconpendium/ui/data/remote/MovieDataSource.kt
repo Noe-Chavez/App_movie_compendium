@@ -1,7 +1,6 @@
-package mx.com.disoftware.movieconpendium.data.remote
+package mx.com.disoftware.movieconpendium.ui.data.remote
 
 import mx.com.disoftware.movieconpendium.application.AppConstants
-import mx.com.disoftware.movieconpendium.data.model.MovieList
 import mx.com.disoftware.movieconpendium.repository.WebService
 
 /*

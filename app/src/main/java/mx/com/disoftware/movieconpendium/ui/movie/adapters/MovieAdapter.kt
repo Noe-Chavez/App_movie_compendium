@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import mx.com.disoftware.movieconpendium.core.BaseViewHolder
-import mx.com.disoftware.movieconpendium.data.model.Movie
+import mx.com.disoftware.movieconpendium.ui.data.model.Movie
 import mx.com.disoftware.movieconpendium.databinding.MovieItemBinding
 
 // *: indica que será cualquier tipo de View holder.
