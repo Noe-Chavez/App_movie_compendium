@@ -1,13 +1,13 @@
 package mx.com.disoftware.movieconpendium.repository
 
-import mx.com.disoftware.movieconpendium.ui.data.remote.MovieDataSource
+import mx.com.disoftware.movieconpendium.ui.data.remote.RemoteMovieDataSource
 
-class MovieRepositoryImpl(private val dataSource: MovieDataSource) : MovieRepository {
+class MovieRepositoryImpl(private val dataSourceRemote: RemoteMovieDataSource) : MovieRepository {
 
-    override suspend fun getUpcomingMovies() = dataSource.getUpcomingMovies()
+    override suspend fun getUpcomingMovies() = dataSourceRemote.getUpcomingMovies()
 
-    override suspend fun getTopRatedMovies() = dataSource.getTopRatedMovies()
+    override suspend fun getTopRatedMovies() = dataSourceRemote.getTopRatedMovies()
 
-    override suspend fun getPopularMovies() = dataSource.getPopularMovies()
+    override suspend fun getPopularMovies() = dataSourceRemote.getPopularMovies()
 
 }
