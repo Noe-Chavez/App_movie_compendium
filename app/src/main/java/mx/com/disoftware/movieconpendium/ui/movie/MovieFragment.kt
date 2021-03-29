@@ -17,6 +17,8 @@ import mx.com.disoftware.movieconpendium.presentation.MovieViewModel
 import mx.com.disoftware.movieconpendium.presentation.MovieViewModelFactory
 import mx.com.disoftware.movieconpendium.repository.MovieRepositoryImpl
 import mx.com.disoftware.movieconpendium.repository.RetrofitClient
+import mx.com.disoftware.movieconpendium.ui.data.local.AppDataBase
+import mx.com.disoftware.movieconpendium.ui.data.local.LocalMovieDataSource
 import mx.com.disoftware.movieconpendium.ui.movie.adapters.MovieAdapter
 import mx.com.disoftware.movieconpendium.ui.movie.adapters.concat.PopularConcatAdapter
 import mx.com.disoftware.movieconpendium.ui.movie.adapters.concat.TopRatedConcatAdapter
@@ -39,9 +41,11 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnMovieCli
      */
     private val viewModel by viewModels<MovieViewModel> {
         MovieViewModelFactory(
-            MovieRepositoryImpl(RemoteMovieDataSource(
-                RetrofitClient.webService
-            ))
+            MovieRepositoryImpl(
+                RemoteMovieDataSource(RetrofitClient.webService),
+                // Se cargan los cursos desde db local.
+                LocalMovieDataSource(AppDataBase.getDataBase(requireContext()).movieDao())
+            )
         )
     }
 
