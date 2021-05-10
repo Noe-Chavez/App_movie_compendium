@@ -5,8 +5,8 @@ package mx.com.disoftware.movieconpendium.ui.data.model
 data class Movie(
         val id: Int = -1,
         val adult: Boolean = false,
-        val genre_ids: List<Int> = listOf(),
         val backdrop_path: String = "not path",
+        val genre_ids: List<Int> = listOf(),
         val original_title: String = "no title established",
         val original_language: String = "no language established",
         val overview: String = "no overview established",

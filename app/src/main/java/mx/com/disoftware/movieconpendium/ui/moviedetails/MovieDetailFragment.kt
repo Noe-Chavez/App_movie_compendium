@@ -15,16 +15,6 @@ class MovieDetailFragment : Fragment() {
     private lateinit var binding: FragmentMovieDetailBinding
     private val args by navArgs<MovieDetailFragmentArgs>()
 
-    /*override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
-    }*/
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -35,7 +25,7 @@ class MovieDetailFragment : Fragment() {
         binding.txtDescription.text = args.overview
         binding.txtMovieTitle.text = args.title
         binding.txtLanguage.text = "Language ${args.language}"
-        binding.txtRating.text = "${args.voteAvarage} (${args.voteCount} Reviews)"
+        binding.txtRating.text = "${args.voteAverage} (${args.voteCount} Reviews)"
         binding.txtReleased.text = "Released ${args.releaseDate}"
     }
 

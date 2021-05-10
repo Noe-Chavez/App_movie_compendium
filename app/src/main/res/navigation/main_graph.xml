@@ -21,10 +21,11 @@
         <argument
             android:name="posterImageUrl"
             app:argType="string" />
-        <argument android:name="backgroundImageUrl"
+        <argument
+            android:name="backgroundImageUrl"
             app:argType="string" />
         <argument
-            android:name="voteAvarage"
+            android:name="voteAverage"
             app:argType="float" />
         <argument
             android:name="voteCount"

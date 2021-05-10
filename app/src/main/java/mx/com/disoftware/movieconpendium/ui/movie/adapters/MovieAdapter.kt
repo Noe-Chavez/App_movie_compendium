@@ -30,7 +30,7 @@ class MovieAdapter(
         itemBinding.root.setOnClickListener {
             // obtener la posicion del viewholder que estoy cliqueando.
             val position =
-                    holder.absoluteAdapterPosition.takeIf {
+                    holder.bindingAdapterPosition.takeIf {
                         it != DiffUtil.DiffResult.NO_POSITION
                     }
                             ?: return@setOnClickListener // toma la posicion en la cual se hace click y devolver esa posición. Si no en cuentra nada, no se devuelve nada.

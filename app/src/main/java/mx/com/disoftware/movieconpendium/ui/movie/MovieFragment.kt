@@ -1,6 +1,5 @@
 package mx.com.disoftware.movieconpendium.ui.movie
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -35,11 +34,14 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnMovieCli
     /**
      * se crea el view model meidante un delegador (by), el cual delega la creación del objeto mediante inyacción de
      * dependencia manual, es decir; que se crea un viewModel a su vez el solicita un ModelFactory, que éste requiere
-     * de la implementación del repositorio que requiere de MovieDataSource (petlicón de la data al servidor remoto),
+     * de la implementación del repositorio que requiere de MovieDataSource (peticion de la data al servidor remoto),
      * mediante el consumo del servicio web.
+     *
+     * Nota: esto es una inyeccion de dependencia manual.
      */
     private val viewModel by viewModels<MovieViewModel> {
         MovieViewModelFactory(
+            // Para indicar al repo de donde recuperara los datos (local o remota)
             MovieRepositoryImpl(MovieDataSource(
                 RetrofitClient.webService
             ))
@@ -55,6 +57,9 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnMovieCli
         concatAdapter = ConcatAdapter()
 
         // Se hacen las llamadas de manera secuencial, primero la de coming, luego rated y al último popular.
+        // cada que se hace un emit en fetchMainScreenMovies, se observa, para saber su resultado.
+        // viewLifecycleOwner solo en fragmentos, vigila el ciclo de vida y sólo se suscribe una vez. por lo tanto
+        // se encarga de suscribir y desuscirbir con forme al ciclo de vida del fragmento.
         viewModel.fetchMainScreenMovies().observe(viewLifecycleOwner, Observer { result ->
             when(result) {
                 is Resource.Loanding -> {
@@ -90,7 +95,8 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnMovieCli
             movie.overview,
             movie.title,
             movie.original_language,
-            movie.release_date )
+            movie.release_date
+        )
         findNavController().navigate(action)
         Log.d("Movie", "onMovieClick: $movie")
     }

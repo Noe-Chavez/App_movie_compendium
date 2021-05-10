@@ -9,7 +9,7 @@ import mx.com.disoftware.movieconpendium.repository.MovieRepository
 import java.lang.Exception
 
 /**
- * En la documentacion se especifica que no debemos colocar al ViewModel generando la instancia,
+ * En la documentacion se especifica que no debemos colocar al ViewModel inyectandola por constructor,
  * para ello nos permite crear nuestro propia forma de crear la dependencia.
  * */
 class MovieViewModel(private val repo: MovieRepository) : ViewModel() {
@@ -19,14 +19,15 @@ class MovieViewModel(private val repo: MovieRepository) : ViewModel() {
      * para traer información remota se utiliza IO.
      */
     fun fetchMainScreenMovies() = liveData(Dispatchers.IO) {
-        emit(Resource.Loanding())
+        emit(Resource.Loanding()) // estado: buscando datos (se activa el loading en la interfaz grafica).
         try {
+            // Aquí se ejecuta la corrutina para traer los datos del serivicio remoto.
             // Realiza las tres peticiones al mismo tiempo, se pueden hacer para n llamadas, buscar la clase NTuple...
             emit(Resource.Success(
-                Triple(repo.getUpcomingMovies(), repo.getTopRatedMovies(), repo.getPopularMovies()))
+                Triple(repo.getUpcomingMovies(), repo.getTopRatedMovies(), repo.getPopularMovies())) // datos recuperados
             )
         } catch (e: Exception) {
-            emit(Resource.Failure(e))
+            emit(Resource.Failure(e)) // si existe algun error, no se pudo recuperar los datos
         }
     }
 
