@@ -8,7 +8,7 @@ import java.net.Socket
 object InternetChack {
     suspend fun isNetworkAvailable() = coroutineScope {
         return@coroutineScope try {
-            // Vadar si hay internet (emulamos un ping a 8.8.8.8)
+            // Validar si hay internet (emulamos un ping a 8.8.8.8)
             val sock = Socket()
             val socketAddress = InetSocketAddress("8.8.8.8", 53)
             sock.connect(socketAddress, 2000)
